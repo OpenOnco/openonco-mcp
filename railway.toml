@@ -1,11 +1,8 @@
 [build]
-builder = "nixpacks"
-
-[build.env]
-NIXPACKS_JDK_VERSION = "21"
+builder = "dockerfile"
+dockerfilePath = "Dockerfile"
 
 [deploy]
-startCommand = "java -jar target/openonco-mcp-runner.jar"
 healthcheckPath = "/q/health"
 healthcheckTimeout = 30
 
