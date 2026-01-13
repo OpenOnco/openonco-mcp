@@ -283,6 +283,13 @@ public class DuckDbService {
      * Validates that all records have non-null required fields.
      */
     private void validateRequiredFields(String tableName) throws SQLException {
+        // Skip validation for empty tables (they won't have columns)
+        int rowCount = getTableRowCount(tableName);
+        if (rowCount == 0) {
+            Log.infof("Skipping validation for empty table %s", tableName);
+            return;
+        }
+
         // Build condition for null/empty required fields
         StringBuilder condition = new StringBuilder();
         for (int i = 0; i < REQUIRED_FIELDS.length; i++) {
