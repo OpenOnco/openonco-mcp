@@ -4,7 +4,4 @@ dockerfilePath = "Dockerfile"
 
 [deploy]
 healthcheckPath = "/q/health"
-healthcheckTimeout = 30
-
-[variables]
-QUARKUS_HTTP_PORT = "$PORT"
+healthcheckTimeout = 120
