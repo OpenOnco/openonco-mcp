@@ -56,12 +56,17 @@ Add to your `claude_desktop_config.json`:
 }
 ```
 
-### SSE Mode (HTTP)
+### HTTP Mode (Remote)
 
-For HTTP-based MCP clients, the server runs on port 9001:
+The hosted OpenOnco MCP server is available at:
 
-- **Streamable endpoint**: `http://localhost:9001/mcp`
-- **SSE endpoint**: `http://localhost:9001/mcp/sse`
+- **Recommended**: `https://mcp.openonco.org/mcp` (Streamable HTTP)
+- **Legacy**: `https://mcp.openonco.org/mcp/sse` (HTTP + SSE, for older clients)
+
+For local development, the server runs on port 9001:
+
+- **Streamable HTTP**: `http://localhost:9001/mcp`
+- **SSE (legacy)**: `http://localhost:9001/mcp/sse`
 
 ## Tool Reference
 
