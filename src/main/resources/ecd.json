@@ -74,7 +74,22 @@
     "numPublicationsPlus": true,
     "nccnNamedInGuidelines": true,
     "nccnGuidelineReference": "NCCN Colorectal Cancer Screening V.1.2025 (June 2025)",
-    "nccnGuidelinesNotes": "Added to NCCN CRC Screening Guidelines in June 2025 as an acceptable screening option for average-risk adults with 3-year screening interval recommendation. First blood-based test included in NCCN CRC screening guidelines."
+    "nccnGuidelinesNotes": "Added to NCCN CRC Screening Guidelines in June 2025 as an acceptable screening option for average-risk adults with 3-year screening interval recommendation. First blood-based test included in NCCN CRC screening guidelines.",
+    "medicareCoverage": {
+      "status": "COVERED",
+      "policyType": "NCD",
+      "policyNumber": "210.3",
+      "policyName": "Colorectal Cancer Screening Tests",
+      "coveredIndications": [
+        "Age 45-85",
+        "Average risk, asymptomatic",
+        "Once every 3 years"
+      ],
+      "reimbursementRate": "$1,495",
+      "cptCode": null,
+      "notes": "First FDA-approved blood test for CRC screening. ADLT status April 2025.",
+      "lastVerified": "2026-01-13"
+    }
   },
   {
     "id": "ecd-2",
@@ -147,7 +162,18 @@
     "totalParticipants": 188535,
     "totalParticipantsCitations": "https://clinicaltrials.gov/study/NCT05611632 | https://clinicaltrials.gov/study/NCT05155605 | https://clinicaltrials.gov/study/NCT03934866",
     "numPublications": 20,
-    "numPublicationsPlus": true
+    "numPublicationsPlus": true,
+    "medicareCoverage": {
+      "status": "NOT_COVERED",
+      "policyType": null,
+      "policyNumber": null,
+      "policyName": null,
+      "coveredIndications": [],
+      "reimbursementRate": "$949 (self-pay)",
+      "cptCode": null,
+      "notes": "NOT covered by Medicare. REACH study (IDE) provides coverage for 50,000 study participants only. Pending FDA approval and congressional action (H.R. 2407, S. 2085).",
+      "lastVerified": "2026-01-13"
+    }
   },
   {
     "id": "ecd-3",
@@ -210,7 +236,18 @@
     "nccnNamedInGuidelines": true,
     "nccnGuidelineReference": "NCCN Colorectal Cancer Screening Guidelines",
     "nccnGuidelinesNotes": "Multitarget stool DNA (mt-sDNA) testing is standard of care inclusion in NCCN CRC Screening guidelines. Cologuard Plus is the FDA-approved mt-sDNA test from Exact Sciences.",
-    "nccnGuidelinesCitations": "https://www.nccn.org/guidelines/guidelines-detail?category=2&id=1429"
+    "nccnGuidelinesCitations": "https://www.nccn.org/guidelines/guidelines-detail?category=2&id=1429",
+    "medicareCoverage": {
+      "status": "UNKNOWN",
+      "policyType": null,
+      "policyNumber": null,
+      "policyName": null,
+      "coveredIndications": [],
+      "reimbursementRate": null,
+      "cptCode": null,
+      "notes": "Need to verify coverage - different from original Cologuard",
+      "lastVerified": "2026-01-13"
+    }
   },
   {
     "id": "ecd-4",
@@ -262,7 +299,22 @@
     "clinicalTrialsCitations": "https://clinicaltrials.gov/study/NCT04739722",
     "totalParticipants": 8920,
     "numPublications": 3,
-    "numPublicationsPlus": true
+    "numPublicationsPlus": true,
+    "medicareCoverage": {
+      "status": "PENDING_COVERAGE",
+      "policyType": "NCD",
+      "policyNumber": "210.3",
+      "policyName": "Colorectal Cancer Screening Tests",
+      "coveredIndications": [
+        "CRC screening",
+        "Ages 45+",
+        "Average risk"
+      ],
+      "reimbursementRate": null,
+      "cptCode": null,
+      "notes": "PENDING Medicare coverage. First FDA-approved stool RNA test for CRC screening. 94% CRC sensitivity, 88% specificity.",
+      "lastVerified": "2026-01-13"
+    }
   },
   {
     "id": "ecd-6",
@@ -317,7 +369,18 @@
     "clinicalTrialsCitations": "https://clinicaltrials.gov/study/NCT04369053",
     "totalParticipants": 48995,
     "numPublications": 2,
-    "numPublicationsPlus": true
+    "numPublicationsPlus": true,
+    "medicareCoverage": {
+      "status": "NOT_YET_AVAILABLE",
+      "policyType": null,
+      "policyNumber": null,
+      "policyName": null,
+      "coveredIndications": [],
+      "reimbursementRate": null,
+      "cptCode": null,
+      "notes": "NOT YET AVAILABLE - awaiting FDA approval (expected 2026). Upon approval, expected to qualify for NCD 210.3 coverage.",
+      "lastVerified": "2026-01-13"
+    }
   },
   {
     "id": "ecd-7",
@@ -371,7 +434,18 @@
     "clinicalTrialsCitations": "https://clinicaltrials.gov/study/NCT05306288 | https://clinicaltrials.gov/study/NCT04825834 | https://clinicaltrials.gov/study/NCT06145750",
     "totalParticipants": 15958,
     "numPublications": 3,
-    "numPublicationsPlus": true
+    "numPublicationsPlus": true,
+    "medicareCoverage": {
+      "status": "NOT_COVERED",
+      "policyType": null,
+      "policyNumber": null,
+      "policyName": null,
+      "coveredIndications": [],
+      "reimbursementRate": "Several hundred dollars (self-pay)",
+      "cptCode": null,
+      "notes": "NOT COVERED by Medicare. CMS lacks statutory authority to cover new lung cancer screening tests. H.R. 6693 pending.",
+      "lastVerified": "2026-01-13"
+    }
   },
   {
     "id": "ecd-8",
@@ -427,7 +501,21 @@
     "totalParticipants": 3315,
     "numPublications": 2,
     "numPublicationsPlus": true,
-    "vendorRequestedChanges": "2026-01-11: Updated sensitivity from 85% to 47.8% and stage I from 76% to 37.8% per CLiMB prospective study (n=1,968) data presented at EASL 2024. Previous ENCORE case-control data (n=247) overstated performance. Error report submitted by Pierre Arsene (Mursla). 2026-01-12: Corrected specificity from 91% to 88% per CLiMB/Helio investor deck (Pierre Arsene follow-up)."
+    "vendorRequestedChanges": "2026-01-11: Updated sensitivity from 85% to 47.8% and stage I from 76% to 37.8% per CLiMB prospective study (n=1,968) data presented at EASL 2024. Previous ENCORE case-control data (n=247) overstated performance. Error report submitted by Pierre Arsene (Mursla). 2026-01-12: Corrected specificity from 91% to 88% per CLiMB/Helio investor deck (Pierre Arsene follow-up).",
+    "medicareCoverage": {
+      "status": "EXPECTED_COVERAGE",
+      "policyType": null,
+      "policyNumber": null,
+      "policyName": null,
+      "coveredIndications": [
+        "HCC surveillance",
+        "Patients with liver cirrhosis or Hepatitis B"
+      ],
+      "reimbursementRate": "Covered with prior authorization by most health plans (varies)",
+      "cptCode": "0333U",
+      "notes": "EXPECTED Medicare coverage pending FDA approval. 85% all-stage HCC sensitivity, 91% specificity.",
+      "lastVerified": "2026-01-13"
+    }
   },
   {
     "id": "ecd-9",
@@ -482,7 +570,18 @@
     "totalParticipants": 3000,
     "numPublications": 3,
     "numPublicationsPlus": true,
-    "vendorRequestedChanges": "2026-01-11: Updated sensitivity from 88% to 77% (early-stage) and 82% to 64% (very early-stage), specificity from 87% to 82% per ALTUS prospective study (n=3,000+) presented at AASLD November 2025. Previous Phase II case-control data overstated performance. Error report submitted by Pierre Arsene (Mursla). 2026-01-12: Further corrected sensitivity from 77% to 70% overall per AASLD 2025 presentation charts; specificity refined to 81.9% (Pierre Arsene follow-up with screenshots)."
+    "vendorRequestedChanges": "2026-01-11: Updated sensitivity from 88% to 77% (early-stage) and 82% to 64% (very early-stage), specificity from 87% to 82% per ALTUS prospective study (n=3,000+) presented at AASLD November 2025. Previous Phase II case-control data overstated performance. Error report submitted by Pierre Arsene (Mursla). 2026-01-12: Further corrected sensitivity from 77% to 70% overall per AASLD 2025 presentation charts; specificity refined to 81.9% (Pierre Arsene follow-up with screenshots).",
+    "medicareCoverage": {
+      "status": "UNKNOWN",
+      "policyType": null,
+      "policyNumber": null,
+      "policyName": null,
+      "coveredIndications": [],
+      "reimbursementRate": null,
+      "cptCode": null,
+      "notes": "Need to verify coverage status",
+      "lastVerified": "2026-01-13"
+    }
   },
   {
     "id": "ecd-10",
@@ -539,7 +638,18 @@
     "screeningInterval": "Annual recommended (with Shield CRC every 3 years)",
     "clinicalTrials": "NCI Vanguard Study multi-cancer detection feasibility (24000 target); AACR 2025 presentations; ASCO 2025 presentations",
     "totalParticipants": 24000,
-    "numPublications": 0
+    "numPublications": 0,
+    "medicareCoverage": {
+      "status": "PENDING_FDA",
+      "policyType": null,
+      "policyNumber": null,
+      "policyName": null,
+      "coveredIndications": [],
+      "reimbursementRate": null,
+      "cptCode": null,
+      "notes": "Multi-cancer detection - coverage TBD pending FDA approval",
+      "lastVerified": "2026-01-13"
+    }
   },
   {
     "id": "ecd-11",
@@ -601,7 +711,18 @@
     "totalParticipants": 482,
     "numPublications": 1,
     "numPublicationsPlus": false,
-    "technologyDifferentiator": "PCR-based (not NGS) - enables faster TAT, lower cost, and global scalability vs sequencing-based MCED tests"
+    "technologyDifferentiator": "PCR-based (not NGS) - enables faster TAT, lower cost, and global scalability vs sequencing-based MCED tests",
+    "medicareCoverage": {
+      "status": "NOT_COVERED",
+      "policyType": null,
+      "policyNumber": null,
+      "policyName": null,
+      "coveredIndications": [],
+      "reimbursementRate": "$699 self-pay",
+      "cptCode": null,
+      "notes": "NOT covered by Medicare or major insurance carriers. Multi-cancer early detection via methylation-specific PCR.",
+      "lastVerified": "2026-01-13"
+    }
   },
   {
     "id": "ecd-12",
@@ -661,7 +782,18 @@
     "numPublications": 0,
     "numPublicationsPlus": false,
     "numPublicationsNotes": "Manuscript under preparation; data presented on company website",
-    "technologyDifferentiator": "Proteomics-based (not ctDNA/methylation) - first protein-based liquid biopsy for lung cancer detection; measures protein biomarkers rather than genetic or epigenetic signals; simple blood draw with no specialized collection tubes"
+    "technologyDifferentiator": "Proteomics-based (not ctDNA/methylation) - first protein-based liquid biopsy for lung cancer detection; measures protein biomarkers rather than genetic or epigenetic signals; simple blood draw with no specialized collection tubes",
+    "medicareCoverage": {
+      "status": "NOT_COVERED",
+      "policyType": null,
+      "policyNumber": null,
+      "policyName": null,
+      "coveredIndications": [],
+      "reimbursementRate": "Not disclosed (early access only)",
+      "cptCode": null,
+      "notes": "NOT covered by Medicare. LDT launched Nov 2025. Legislation pending H.R. 6693.",
+      "lastVerified": "2026-01-13"
+    }
   },
   {
     "id": "ecd-13",
@@ -733,7 +865,18 @@
     "numPublications": 3,
     "numPublicationsPlus": true,
     "numPublicationsNotes": "Multiple conference presentations at DDW 2023, ASCO GI 2023, AACR 2022; peer-reviewed publications in preparation",
-    "technologyDifferentiator": "Multi-omics approach combining methylation + fragmentation analysis with machine learning. Company claims to have identified specific cfDNA sequence regions that capture cancer's earliest signals. Spain-based biotech (Universal DX) with US office in Cambridge, MA. Platform technology (Signal-X) being extended to other GI cancers including pancreatic, liver, and gastric."
+    "technologyDifferentiator": "Multi-omics approach combining methylation + fragmentation analysis with machine learning. Company claims to have identified specific cfDNA sequence regions that capture cancer's earliest signals. Spain-based biotech (Universal DX) with US office in Cambridge, MA. Platform technology (Signal-X) being extended to other GI cancers including pancreatic, liver, and gastric.",
+    "medicareCoverage": {
+      "status": "NOT_YET_AVAILABLE",
+      "policyType": null,
+      "policyNumber": null,
+      "policyName": null,
+      "coveredIndications": [],
+      "reimbursementRate": null,
+      "cptCode": null,
+      "notes": "NOT YET AVAILABLE - FDA approval pending trial completion. Upon approval, expected to qualify for NCD 210.3 coverage.",
+      "lastVerified": "2026-01-13"
+    }
   },
   {
     "id": "ecd-14",
@@ -1004,7 +1147,18 @@
     "numPublicationsPlus": true,
     "numPublicationsNotes": "Publications from CancerSEEK, DETECT-A, and ASCEND studies form evidence base. Additional publications expected from FALCON registry.",
     "technologyDifferentiator": "First MCED test from Exact Sciences, leveraging Thrive/CancerSEEK acquisition. Multi-analyte approach (cfDNA + protein) differs from methylation-only tests like Galleri. Competitive pricing ($689) vs Galleri ($949). Available through established Quest Diagnostics network (7,000 sites). Focuses on cancers lacking established screening tests.",
-    "dataSourceNotes": "Added December 2025 via LLM Data Review. Verified via Exact Sciences press releases (Sept 10, 2025 launch)."
+    "dataSourceNotes": "Added December 2025 via LLM Data Review. Verified via Exact Sciences press releases (Sept 10, 2025 launch).",
+    "medicareCoverage": {
+      "status": "NOT_COVERED",
+      "policyType": null,
+      "policyNumber": null,
+      "policyName": null,
+      "coveredIndications": [],
+      "reimbursementRate": null,
+      "cptCode": null,
+      "notes": "MCED - no current Medicare coverage for multi-cancer screening",
+      "lastVerified": "2026-01-13"
+    }
   },
   {
     "id": "ecd-kit-1",
@@ -1448,7 +1602,21 @@
     "numPublicationsNotes": "2 peer-reviewed publications: Clin Gastroenterol Hepatol 2023 (clinical validation, PMID 36967102), J Mol Diagn 2024 (analytical validation, PMID 39230538). Both authored by ClearNote Health employees.",
     "technologyDifferentiator": "First commercially available single-cancer ECD test for pancreatic cancer in OpenOnco database. Uses 5-hydroxymethylcytosine (5hmC) profiling rather than standard 5-methylcytosine (5mC) methylation—5hmC is an oxidized derivative of 5mC with distinct tissue-specific patterns. Targets defined high-risk population (new-onset T2DM, genetic predisposition, family history) rather than general population screening. Strong specificity (96.9%) critical for screening context where false positives lead to unnecessary workup.",
     "vendorVerified": true,
-    "vendorRequestedChanges": "2025-12-16: Initial submission by Adrian Vilalta (ClearNote Health). 2025-12-29: Alex requested clarification on sensitivity discrepancy. 2026-01-05: Vendor confirmed sensitivity 68.3% correct as stated; verified data accuracy."
+    "vendorRequestedChanges": "2025-12-16: Initial submission by Adrian Vilalta (ClearNote Health). 2025-12-29: Alex requested clarification on sensitivity discrepancy. 2026-01-05: Vendor confirmed sensitivity 68.3% correct as stated; verified data accuracy.",
+    "medicareCoverage": {
+      "status": "COVERED",
+      "policyType": "CLFS",
+      "policyNumber": "0410U",
+      "policyName": null,
+      "coveredIndications": [
+        "Age 50+ with new-onset Type 2 diabetes (within 36 months)",
+        "Age 50+ with family history of pancreatic cancer"
+      ],
+      "reimbursementRate": "$1,160",
+      "cptCode": "0410U",
+      "notes": "Medicare covered via Clinical Laboratory Fee Schedule. Final CMS rate Jan 1, 2024. NY State DOH approved.",
+      "lastVerified": "2026-01-13"
+    }
   },
   {
     "id": "ecd-25",
@@ -1499,7 +1667,18 @@
     "isClinicalLDT": true,
     "regulatoryStatusNotes": "CLIA-certified LDT with FDA Breakthrough Device designation; not FDA-approved",
     "vendorVerified": true,
-    "vendorRequestedChanges": "2025-01-01: Initial submission by Momchilo Vuyisich (Viome) with peer-reviewed publications. Vendor verified via email momo@viome.com."
+    "vendorRequestedChanges": "2025-01-01: Initial submission by Momchilo Vuyisich (Viome) with peer-reviewed publications. Vendor verified via email momo@viome.com.",
+    "medicareCoverage": {
+      "status": "NOT_COVERED",
+      "policyType": null,
+      "policyNumber": null,
+      "policyName": null,
+      "coveredIndications": [],
+      "reimbursementRate": "$599 (consumer price)",
+      "cptCode": null,
+      "notes": "NOT covered by Medicare. Consumer product. Not intended to diagnose, treat, cure, or prevent disease.",
+      "lastVerified": "2026-01-13"
+    }
   },
   {
     "id": "ecd-26",
@@ -1704,6 +1883,19 @@
       "submitterEmail": "lara.baden@earlydx.com",
       "submitterType": "vendor",
       "submittedDate": "2026-01-12"
+    },
+    "medicareCoverage": {
+      "status": "PENDING_COVERAGE",
+      "policyType": null,
+      "policyNumber": null,
+      "policyName": null,
+      "coveredIndications": [
+        "Adults at high risk for HCC (cirrhosis, chronic hepatitis B/C, liver disease)"
+      ],
+      "reimbursementRate": null,
+      "cptCode": "PLA code published April 2025",
+      "notes": "Has CPT PLA code, working with MolDx for LCD coverage. Published in Nature Communications 2023.",
+      "lastVerified": "2026-01-13"
     }
   }
 ]
