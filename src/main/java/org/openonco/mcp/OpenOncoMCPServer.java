@@ -33,7 +33,7 @@ import org.openonco.client.OpenOncoClient;
  * <ul>
  *   <li>MRD - Molecular Residual Disease</li>
  *   <li>ECD - Early Cancer Detection</li>
- *   <li>TRM - Treatment Response Monitoring</li>
+ *   <li>HCT - Hereditary Cancer Testing</li>
  *   <li>TDS - Treatment Decision Support</li>
  * </ul>
  */
@@ -95,7 +95,12 @@ public class OpenOncoMCPServer {
 
             Returns JSON array of matching tests. Empty array [] if no matches.
             Default: 50 results, max: 500. Use 'fields' to limit response size.
-            """)
+            """,
+            annotations = @Tool.Annotations(
+                    readOnlyHint = true,
+                    destructiveHint = false,
+                    idempotentHint = true,
+                    openWorldHint = false))
     public String openonco_search_mrd(
             @ToolArg(description = "Filter by vendor/company name (partial match, case-insensitive). " +
                     "Examples: 'Natera', 'Guardant', 'Foundation'",
@@ -164,7 +169,12 @@ public class OpenOncoMCPServer {
 
             Returns JSON array of matching tests. Empty array [] if no matches.
             Default: 50 results, max: 500. Use 'fields' to limit response size.
-            """)
+            """,
+            annotations = @Tool.Annotations(
+                    readOnlyHint = true,
+                    destructiveHint = false,
+                    idempotentHint = true,
+                    openWorldHint = false))
     public String openonco_search_ecd(
             @ToolArg(description = "Filter by vendor/company name (partial match, case-insensitive). " +
                     "Examples: 'GRAIL', 'Exact Sciences', 'Freenome'",
@@ -222,46 +232,47 @@ public class OpenOncoMCPServer {
     }
 
     @Tool(description = """
-            Search and filter TRM (Treatment Response Monitoring) tests.
+            Search and filter HCT (Hereditary Cancer Testing) tests.
 
-            TRM tests track treatment effectiveness via ctDNA changes during therapy.
-            Use this when users ask about monitoring treatment response, therapy tracking,
-            or detecting molecular relapse earlier than imaging.
+            HCT tests identify inherited genetic mutations that increase cancer risk,
+            such as BRCA1/BRCA2 for breast/ovarian cancer or Lynch syndrome genes.
+            Use this when users ask about genetic risk assessment, inherited cancer syndromes,
+            or family history-based testing.
 
-            Note: Discontinued tests are excluded by default. Set include_discontinued=true
-            to see legacy products. Use openonco_get_trm for full details.
+            Tip: Use openonco_get_hct with a test ID for full details including genes covered.
+            Filter by cancer_type to find tests covering specific hereditary cancer syndromes.
 
             Returns JSON array of matching tests. Empty array [] if no matches.
             Default: 50 results, max: 500. Use 'fields' to limit response size.
-            """)
-    public String openonco_search_trm(
+            """,
+            annotations = @Tool.Annotations(
+                    readOnlyHint = true,
+                    destructiveHint = false,
+                    idempotentHint = true,
+                    openWorldHint = false))
+    public String openonco_search_hct(
             @ToolArg(description = "Filter by vendor/company name (partial match, case-insensitive). " +
-                    "Examples: 'Guardant', 'Foundation', 'Tempus'",
+                    "Examples: 'Myriad', 'Invitae', 'Ambry'",
                     required = false)
             String vendor,
 
-            @ToolArg(description = "Filter by cancer type (matches within cancerTypes array). " +
-                    "Examples: 'NSCLC', 'Breast', 'Prostate'",
+            @ToolArg(description = "Filter by cancer type/syndrome (matches within cancerTypes array). " +
+                    "Examples: 'Breast', 'Ovarian', 'Colorectal', 'Lynch syndrome'",
                     required = false)
             String cancer_type,
-
-            @ToolArg(description = "Filter by testing approach. " +
-                    "Values: 'Tumor-informed', 'Tumor-agnostic'",
-                    required = false)
-            String approach,
 
             @ToolArg(description = "Filter by FDA regulatory status (partial match). " +
                     "Examples: 'FDA', 'CLIA', 'approved'",
                     required = false)
             String fda_status,
 
-            @ToolArg(description = "Include discontinued tests in results (default: false). " +
-                    "Set to true to see discontinued/legacy products.",
+            @ToolArg(description = "Minimum number of genes analyzed. " +
+                    "Example: 30 for tests analyzing ≥30 genes",
                     required = false)
-            Boolean include_discontinued,
+            Integer min_genes,
 
             @ToolArg(description = "Comma-separated list of fields to return. " +
-                    "Example: 'id,name,vendor,approach,responseDefinition'. " +
+                    "Example: 'id,name,vendor,genesAnalyzed,cancerTypes'. " +
                     "Returns all fields if not specified.",
                     required = false)
             String fields,
@@ -274,9 +285,9 @@ public class OpenOncoMCPServer {
                     required = false)
             Integer offset
     ) {
-        return safeExecute("openonco_search_trm", () ->
-                client.searchTrm(vendor, cancer_type, approach, fda_status,
-                        include_discontinued, fields, limit, offset));
+        return safeExecute("openonco_search_hct", () ->
+                client.searchHct(vendor, cancer_type, fda_status, min_genes,
+                        fields, limit, offset));
     }
 
     @Tool(description = """
@@ -291,7 +302,12 @@ public class OpenOncoMCPServer {
 
             Returns JSON array of matching tests. Empty array [] if no matches.
             Default: 50 results, max: 500. Use 'fields' to limit response size.
-            """)
+            """,
+            annotations = @Tool.Annotations(
+                    readOnlyHint = true,
+                    destructiveHint = false,
+                    idempotentHint = true,
+                    openWorldHint = false))
     public String openonco_search_tds(
             @ToolArg(description = "Filter by vendor/company name (partial match, case-insensitive). " +
                     "Examples: 'Foundation', 'Tempus', 'Caris'",
@@ -354,6 +370,85 @@ public class OpenOncoMCPServer {
     }
 
     // ========================================
+    // PAP (Patient Assistance Programs) TOOLS
+    // ========================================
+
+    @Tool(description = """
+            Search vendor patient assistance programs.
+
+            Returns eligibility rules, FPL thresholds, contact info, and application URLs.
+            Use when users ask about financial assistance, copay programs, or help paying for tests.
+
+            Tip: Use openonco_get_pap with a program ID or vendor name for full details
+            including required documentation and processing time.
+
+            Returns JSON array of matching programs. Empty array [] if no matches.
+            Default: 20 results. Use 'fields' to limit response size.
+            """,
+            annotations = @Tool.Annotations(
+                    readOnlyHint = true,
+                    destructiveHint = false,
+                    idempotentHint = true,
+                    openWorldHint = false))
+    public String openonco_search_pap(
+            @ToolArg(description = "Filter by vendor name (partial match, case-insensitive). " +
+                    "Examples: 'Natera', 'Guardant', 'Foundation'",
+                    required = false)
+            String vendor,
+
+            @ToolArg(description = "Filter by Medicare eligibility. " +
+                    "true = Medicare patients eligible, false = Medicare patients not eligible",
+                    required = false)
+            Boolean medicare,
+
+            @ToolArg(description = "Filter by Medicaid eligibility. " +
+                    "true = Medicaid patients eligible, false = Medicaid patients not eligible",
+                    required = false)
+            Boolean medicaid,
+
+            @ToolArg(description = "Comma-separated list of fields to return. " +
+                    "Example: 'id,vendorName,programName,phone,applicationUrl'. " +
+                    "Returns all fields if not specified.",
+                    required = false)
+            String fields,
+
+            @ToolArg(description = "Maximum number of records to return (default: 20, max: 500)",
+                    required = false)
+            Integer limit
+    ) {
+        return safeExecute("openonco_search_pap", () ->
+                client.searchPap(vendor, medicare, medicaid, fields, limit, null));
+    }
+
+    @Tool(description = """
+            Get complete PAP details for a specific vendor.
+
+            Retrieves ALL fields for one program including eligibility rules, FPL thresholds,
+            required documentation, processing time, and contact information.
+            Use this after openonco_search_pap to get full details of a specific program.
+
+            Provide either 'id' (e.g., 'pap-1') or 'name' (vendor name like 'Natera').
+            Returns JSON object with all fields, or error with NOT_FOUND if program doesn't exist.
+            """,
+            annotations = @Tool.Annotations(
+                    readOnlyHint = true,
+                    destructiveHint = false,
+                    idempotentHint = true,
+                    openWorldHint = false))
+    public String openonco_get_pap(
+            @ToolArg(description = "Program ID (e.g., 'pap-1'). Takes precedence if both id and name provided.",
+                    required = false)
+            String id,
+
+            @ToolArg(description = "Vendor name (exact match, case-insensitive). " +
+                    "Example: 'Natera'",
+                    required = false)
+            String name
+    ) {
+        return safeExecute("openonco_get_pap", () -> client.getPap(id, name));
+    }
+
+    // ========================================
     // GET TOOLS (Detail)
     // ========================================
 
@@ -366,7 +461,12 @@ public class OpenOncoMCPServer {
 
             Provide either 'id' (e.g., 'mrd-1') or 'name' (e.g., 'Signatera').
             Returns JSON object with all fields, or error with NOT_FOUND if test doesn't exist.
-            """)
+            """,
+            annotations = @Tool.Annotations(
+                    readOnlyHint = true,
+                    destructiveHint = false,
+                    idempotentHint = true,
+                    openWorldHint = false))
     public String openonco_get_mrd(
             @ToolArg(description = "Test ID (e.g., 'mrd-1'). Takes precedence if both id and name provided.",
                     required = false)
@@ -389,7 +489,12 @@ public class OpenOncoMCPServer {
 
             Provide either 'id' (e.g., 'ecd-1') or 'name' (e.g., 'Galleri').
             Returns JSON object with all fields, or error with NOT_FOUND if test doesn't exist.
-            """)
+            """,
+            annotations = @Tool.Annotations(
+                    readOnlyHint = true,
+                    destructiveHint = false,
+                    idempotentHint = true,
+                    openWorldHint = false))
     public String openonco_get_ecd(
             @ToolArg(description = "Test ID (e.g., 'ecd-1'). Takes precedence if both id and name provided.",
                     required = false)
@@ -404,25 +509,31 @@ public class OpenOncoMCPServer {
     }
 
     @Tool(description = """
-            Get complete details of a single TRM (Treatment Response Monitoring) test.
+            Get complete details of a single HCT (Hereditary Cancer Testing) test.
 
-            Retrieves ALL fields for one test, including response definition, lead time
-            vs imaging, sensitivity, LOD, and discontinued status.
-            Use this after openonco_search_trm to get full details of a specific test.
+            Retrieves ALL fields for one test, including genes analyzed, cancer syndromes
+            covered, sample requirements, and regulatory status.
+            Use this after openonco_search_hct to get full details of a specific test.
 
-            Provide either 'id' (e.g., 'trm-1') or 'name'.
+            Provide either 'id' (e.g., 'hct-1') or 'name' (e.g., 'myRisk').
             Returns JSON object with all fields, or error with NOT_FOUND if test doesn't exist.
-            """)
-    public String openonco_get_trm(
-            @ToolArg(description = "Test ID (e.g., 'trm-1'). Takes precedence if both id and name provided.",
+            """,
+            annotations = @Tool.Annotations(
+                    readOnlyHint = true,
+                    destructiveHint = false,
+                    idempotentHint = true,
+                    openWorldHint = false))
+    public String openonco_get_hct(
+            @ToolArg(description = "Test ID (e.g., 'hct-1'). Takes precedence if both id and name provided.",
                     required = false)
             String id,
 
-            @ToolArg(description = "Test name (exact match, case-insensitive).",
+            @ToolArg(description = "Test name (exact match, case-insensitive). " +
+                    "Example: 'myRisk'",
                     required = false)
             String name
     ) {
-        return safeExecute("openonco_get_trm", () -> client.getTrm(id, name));
+        return safeExecute("openonco_get_hct", () -> client.getHct(id, name));
     }
 
     @Tool(description = """
@@ -434,7 +545,12 @@ public class OpenOncoMCPServer {
 
             Provide either 'id' (e.g., 'tds-1') or 'name' (e.g., 'FoundationOne CDx').
             Returns JSON object with all fields, or error with NOT_FOUND if test doesn't exist.
-            """)
+            """,
+            annotations = @Tool.Annotations(
+                    readOnlyHint = true,
+                    destructiveHint = false,
+                    idempotentHint = true,
+                    openWorldHint = false))
     public String openonco_get_tds(
             @ToolArg(description = "Test ID (e.g., 'tds-1'). Takes precedence if both id and name provided.",
                     required = false)
@@ -464,7 +580,12 @@ public class OpenOncoMCPServer {
 
             Default metrics: name, vendor, sensitivity, specificity, lod, initialTat,
             followUpTat, fdaStatus, reimbursement. Returns JSON array of test objects.
-            """)
+            """,
+            annotations = @Tool.Annotations(
+                    readOnlyHint = true,
+                    destructiveHint = false,
+                    idempotentHint = true,
+                    openWorldHint = false))
     public String openonco_compare_mrd(
             @ToolArg(description = "Comma-separated test IDs to compare (e.g., 'mrd-1,mrd-2,mrd-3'). " +
                     "Takes precedence if both ids and names provided.",
@@ -497,7 +618,12 @@ public class OpenOncoMCPServer {
 
             Default metrics: name, vendor, testScope, sensitivity, specificity,
             stageISensitivity, ppv, npv, listPrice, fdaStatus. Returns JSON array.
-            """)
+            """,
+            annotations = @Tool.Annotations(
+                    readOnlyHint = true,
+                    destructiveHint = false,
+                    idempotentHint = true,
+                    openWorldHint = false))
     public String openonco_compare_ecd(
             @ToolArg(description = "Comma-separated test IDs to compare (e.g., 'ecd-1,ecd-2,ecd-3'). " +
                     "Takes precedence if both ids and names provided.",
@@ -519,36 +645,41 @@ public class OpenOncoMCPServer {
     }
 
     @Tool(description = """
-            Compare multiple TRM (Treatment Response Monitoring) tests side-by-side.
+            Compare multiple HCT (Hereditary Cancer Testing) tests side-by-side.
 
             Returns key metrics for multiple tests in a tabular comparison format.
-            Use this when users want to compare treatment monitoring options or evaluate
-            which test detects response/relapse earliest.
+            Use this when users want to compare hereditary cancer panels or evaluate
+            gene coverage across different vendors.
 
-            Tip: Use openonco_search_trm first to find test IDs, then compare.
-            Include 'leadTimeVsImaging' in metrics to see early detection advantage.
+            Tip: Use openonco_search_hct first to find test IDs, then compare.
+            Include 'genesAnalyzed' in metrics to compare panel sizes.
 
-            Default metrics: name, vendor, approach, sensitivity, leadTimeVsImaging,
-            lod, fdaStatus, reimbursement. Returns JSON array of test objects.
-            """)
-    public String openonco_compare_trm(
-            @ToolArg(description = "Comma-separated test IDs to compare (e.g., 'trm-1,trm-2,trm-3'). " +
+            Default metrics: name, vendor, genesAnalyzed, cancerTypes, sampleType,
+            tat, listPrice, fdaStatus. Returns JSON array of test objects.
+            """,
+            annotations = @Tool.Annotations(
+                    readOnlyHint = true,
+                    destructiveHint = false,
+                    idempotentHint = true,
+                    openWorldHint = false))
+    public String openonco_compare_hct(
+            @ToolArg(description = "Comma-separated test IDs to compare (e.g., 'hct-1,hct-2,hct-3'). " +
                     "Takes precedence if both ids and names provided.",
                     required = false)
             String ids,
 
-            @ToolArg(description = "Comma-separated test names to compare. " +
+            @ToolArg(description = "Comma-separated test names to compare (e.g., 'myRisk,BRACAnalysis'). " +
                     "Names are matched case-insensitively.",
                     required = false)
             String names,
 
             @ToolArg(description = "Comma-separated metrics to include in comparison. " +
-                    "Example: 'name,vendor,approach,sensitivity,lod'. " +
+                    "Example: 'name,vendor,genesAnalyzed,cancerTypes'. " +
                     "Uses default metrics if not specified.",
                     required = false)
             String metrics
     ) {
-        return safeExecute("openonco_compare_trm", () -> client.compareTrm(ids, names, metrics));
+        return safeExecute("openonco_compare_hct", () -> client.compareHct(ids, names, metrics));
     }
 
     @Tool(description = """
@@ -563,7 +694,12 @@ public class OpenOncoMCPServer {
 
             Default metrics: name, vendor, productType, genesAnalyzed,
             fdaCompanionDxCount, tat, listPrice, fdaStatus. Returns JSON array.
-            """)
+            """,
+            annotations = @Tool.Annotations(
+                    readOnlyHint = true,
+                    destructiveHint = false,
+                    idempotentHint = true,
+                    openWorldHint = false))
     public String openonco_compare_tds(
             @ToolArg(description = "Comma-separated test IDs to compare (e.g., 'tds-1,tds-2,tds-3'). " +
                     "Takes precedence if both ids and names provided.",
@@ -598,7 +734,12 @@ public class OpenOncoMCPServer {
             With group_by: returns {"total": N, "by_{field}": {"value1": count, ...}}
 
             Use openonco_list_vendors first to see available vendors for filtering.
-            """)
+            """,
+            annotations = @Tool.Annotations(
+                    readOnlyHint = true,
+                    destructiveHint = false,
+                    idempotentHint = true,
+                    openWorldHint = false))
     public String openonco_count_mrd(
             @ToolArg(description = "Field to group counts by. " +
                     "Valid options: vendor, approach, fdaStatus, requiresTumorTissue, reimbursement. " +
@@ -628,7 +769,12 @@ public class OpenOncoMCPServer {
             With group_by: returns {"total": N, "by_{field}": {"value1": count, ...}}
 
             Tip: group_by='testScope' shows Single-cancer vs Multi-cancer breakdown.
-            """)
+            """,
+            annotations = @Tool.Annotations(
+                    readOnlyHint = true,
+                    destructiveHint = false,
+                    idempotentHint = true,
+                    openWorldHint = false))
     public String openonco_count_ecd(
             @ToolArg(description = "Field to group counts by. " +
                     "Valid options: vendor, testScope, fdaStatus, reimbursement. " +
@@ -649,20 +795,24 @@ public class OpenOncoMCPServer {
     }
 
     @Tool(description = """
-            Count TRM (Treatment Response Monitoring) tests with optional grouping.
+            Count HCT (Hereditary Cancer Testing) tests with optional grouping.
 
-            Get aggregate statistics about TRM tests. Use this to answer questions like
-            "How many active monitoring tests?" or "How many tests are discontinued?"
-
-            Note: Discontinued tests excluded by default. Set include_discontinued=true
-            and group_by='isDiscontinued' to see active vs discontinued breakdown.
+            Get aggregate statistics about HCT tests. Use this to answer questions like
+            "How many hereditary cancer tests are available?" or "How many tests per vendor?"
 
             Without group_by: returns {"total": N}
             With group_by: returns {"total": N, "by_{field}": {"value1": count, ...}}
-            """)
-    public String openonco_count_trm(
+
+            Tip: group_by='vendor' shows distribution across testing companies.
+            """,
+            annotations = @Tool.Annotations(
+                    readOnlyHint = true,
+                    destructiveHint = false,
+                    idempotentHint = true,
+                    openWorldHint = false))
+    public String openonco_count_hct(
             @ToolArg(description = "Field to group counts by. " +
-                    "Valid options: vendor, approach, fdaStatus, reimbursement, isDiscontinued. " +
+                    "Valid options: vendor, fdaStatus, reimbursement, sampleCategory. " +
                     "Omit to get only the total count.",
                     required = false)
             String group_by,
@@ -671,17 +821,12 @@ public class OpenOncoMCPServer {
                     required = false)
             String filter_vendor,
 
-            @ToolArg(description = "Filter by approach before counting. " +
-                    "Values: 'Tumor-informed' or 'Tumor-agnostic'",
+            @ToolArg(description = "Filter by FDA status before counting (partial match)",
                     required = false)
-            String filter_approach,
-
-            @ToolArg(description = "Include discontinued tests in counts (default: false)",
-                    required = false)
-            Boolean include_discontinued
+            String filter_fda_status
     ) {
-        return safeExecute("openonco_count_trm", () ->
-                client.countTrm(group_by, filter_vendor, filter_approach, include_discontinued));
+        return safeExecute("openonco_count_hct", () ->
+                client.countHct(group_by, filter_vendor, filter_fda_status));
     }
 
     @Tool(description = """
@@ -694,7 +839,12 @@ public class OpenOncoMCPServer {
             With group_by: returns {"total": N, "by_{field}": {"value1": count, ...}}
 
             Tip: group_by='productType' shows Central Lab Service vs Laboratory IVD Kit.
-            """)
+            """,
+            annotations = @Tool.Annotations(
+                    readOnlyHint = true,
+                    destructiveHint = false,
+                    idempotentHint = true,
+                    openWorldHint = false))
     public String openonco_count_tds(
             @ToolArg(description = "Field to group counts by. " +
                     "Valid options: vendor, productType, fdaStatus, approach, reimbursement. " +
@@ -727,10 +877,15 @@ public class OpenOncoMCPServer {
 
             Returns JSON array of vendor names sorted alphabetically.
             Filter by category to see vendors in specific test types only.
-            """)
+            """,
+            annotations = @Tool.Annotations(
+                    readOnlyHint = true,
+                    destructiveHint = false,
+                    idempotentHint = true,
+                    openWorldHint = false))
     public String openonco_list_vendors(
             @ToolArg(description = "Filter by test category. " +
-                    "Values: 'mrd', 'ecd', 'trm', 'tds'. " +
+                    "Values: 'mrd', 'ecd', 'hct', 'tds'. " +
                     "Omit to list vendors across all categories.",
                     required = false)
             String category
@@ -746,10 +901,15 @@ public class OpenOncoMCPServer {
 
             Returns JSON array of cancer type names sorted alphabetically.
             Filter by category to see cancer types in specific test types only.
-            """)
+            """,
+            annotations = @Tool.Annotations(
+                    readOnlyHint = true,
+                    destructiveHint = false,
+                    idempotentHint = true,
+                    openWorldHint = false))
     public String openonco_list_cancer_types(
             @ToolArg(description = "Filter by test category. " +
-                    "Values: 'mrd', 'ecd', 'trm', 'tds'. " +
+                    "Values: 'mrd', 'ecd', 'hct', 'tds'. " +
                     "Omit to list cancer types across all categories.",
                     required = false)
             String category
@@ -761,13 +921,18 @@ public class OpenOncoMCPServer {
             List all test categories with metadata and current test counts.
 
             Use this FIRST to understand what data is available. Returns the four
-            oncology diagnostic test categories: MRD, ECD, TRM, TDS.
+            oncology diagnostic test categories: MRD, ECD, HCT, TDS.
 
             Each category includes: id, name, shortName, description, testCount.
             The testCount reflects the actual number of tests currently in each category.
 
             This is a good starting point for users new to the OpenOnco data.
-            """)
+            """,
+            annotations = @Tool.Annotations(
+                    readOnlyHint = true,
+                    destructiveHint = false,
+                    idempotentHint = true,
+                    openWorldHint = false))
     public String openonco_list_categories() {
         return safeExecute("openonco_list_categories", () -> client.listCategories());
     }

@@ -81,6 +81,11 @@
             <version>3.26.3</version>
             <scope>test</scope>
         </dependency>
+        <!-- Health check endpoint for Railway/k8s -->
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-smallrye-health</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

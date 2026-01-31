@@ -2,6 +2,43 @@
 
 A Model Context Protocol (MCP) server that provides AI assistants with tools to query oncology diagnostic test data. Built with Quarkus and DuckDB.
 
+## Features
+
+- **19 specialized tools** for oncology diagnostic test discovery
+- **Four test categories**: MRD, ECD, TRM, and TDS
+- **Rich filtering**: By vendor, cancer type, sensitivity, FDA status, price, and more
+- **Comparison tools**: Side-by-side test comparisons with customizable metrics
+- **No authentication required**: Public read-only access to test data
+
+## Usage Examples
+
+### Example 1: Find MRD Tests for Colorectal Cancer
+
+**User prompt:**
+> "What MRD tests are available for monitoring colorectal cancer after surgery?"
+
+**Claude uses:** `openonco_search_mrd` with `cancer_type: "Colorectal"` and `clinical_setting: "Post-Surgery"`
+
+**Result:** Returns tests like Signatera, Guardant Reveal, and others with their sensitivity, specificity, turnaround times, and FDA status.
+
+### Example 2: Compare Multi-Cancer Early Detection Tests
+
+**User prompt:**
+> "Compare the major MCED screening tests - I want to see sensitivity, specificity, and pricing."
+
+**Claude uses:** `openonco_search_ecd` with `test_scope: "Multi-cancer"`, then `openonco_compare_ecd` with the found test IDs
+
+**Result:** Side-by-side comparison showing Galleri, Shield, and others with detection rates, false positive rates, stage-specific sensitivity, and list prices.
+
+### Example 3: Treatment Decision Support Panels with FDA Companion Diagnostics
+
+**User prompt:**
+> "Which CGP panels have FDA companion diagnostic approvals? I need one that covers at least 300 genes."
+
+**Claude uses:** `openonco_search_tds` with `has_fda_cdx: true` and `min_genes: 300`
+
+**Result:** Returns FoundationOne CDx, Tempus xT, and similar panels showing gene coverage, FDA CDx indication counts, turnaround times, and reimbursement status.
+
 ## Overview
 
 OpenOnco MCP Server exposes 19 tools for searching, filtering, comparing, and analyzing oncology diagnostic tests across four categories:
@@ -56,12 +93,17 @@ Add to your `claude_desktop_config.json`:
 }
 ```
 
-### SSE Mode (HTTP)
+### HTTP Mode (Remote)
 
-For HTTP-based MCP clients, the server runs on port 9001:
+The hosted OpenOnco MCP server is available at:
 
-- **Streamable endpoint**: `http://localhost:9001/mcp`
-- **SSE endpoint**: `http://localhost:9001/mcp/sse`
+- **Recommended**: `https://mcp.openonco.org/mcp` (Streamable HTTP)
+- **Legacy**: `https://mcp.openonco.org/mcp/sse` (HTTP + SSE, for older clients)
+
+For local development, the server runs on port 9001:
+
+- **Streamable HTTP**: `http://localhost:9001/mcp`
+- **SSE (legacy)**: `http://localhost:9001/mcp/sse`
 
 ## Tool Reference
 
@@ -314,6 +356,27 @@ src/main/resources/
 # Single test method
 ./mvnw test -Dtest=SearchToolsTest#testSearchMrd_NoFilters
 ```
+
+## Privacy Policy
+
+**OpenOnco MCP Server does not collect, store, or transmit any user data.** 
+
+The server operates as a read-only data provider:
+- No user queries are logged or stored
+- No conversation data is retained
+- No personal information is collected
+- No cookies or tracking mechanisms are used
+- No authentication is required
+
+The server only returns oncology test data from OpenOnco's public database. For the complete privacy policy, see: https://openonco.org/privacy
+
+## Support
+
+For issues, questions, or feedback:
+
+- **Email**: alex@openonco.org
+- **GitHub Issues**: https://github.com/openonco/openonco-mcp/issues
+- **Website**: https://openonco.org
 
 ## License
 

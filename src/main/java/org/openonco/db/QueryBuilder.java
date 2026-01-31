@@ -147,6 +147,22 @@ public final class QueryBuilder {
     }
 
     /**
+     * Builds a query to get a single record by vendorName (case-insensitive).
+     * Used for PAP programs which use vendorName instead of name.
+     *
+     * @param table      The table name
+     * @param vendorName The vendor name
+     * @return QueryResult for fetching by vendorName
+     */
+    public static QueryResult buildGetByVendorNameQuery(String table, String vendorName) {
+        validateTableName(table);
+        return new QueryResult(
+                "SELECT * FROM " + table + " WHERE vendorName ILIKE ?",
+                new Object[]{vendorName}
+        );
+    }
+
+    /**
      * Builds a query to get multiple records by IDs.
      *
      * @param table The table name
@@ -298,7 +314,7 @@ public final class QueryBuilder {
         // Handle special meta-filters first (these don't map directly to field names)
         switch (field) {
             case "exclude_discontinued" -> {
-                // For TRM: exclude discontinued tests by default
+                // For categories with discontinued tests: exclude by default
                 if (Boolean.TRUE.equals(value)) {
                     // No params needed - this is a literal condition
                     return "(isDiscontinued = false OR isDiscontinued IS NULL)";
@@ -311,6 +327,24 @@ public final class QueryBuilder {
                     return "fdaCompanionDxCount > 0";
                 } else if (Boolean.FALSE.equals(value)) {
                     return "(fdaCompanionDxCount = 0 OR fdaCompanionDxCount IS NULL)";
+                }
+                return null;
+            }
+            case "medicareEligible" -> {
+                // For PAP: filter by Medicare eligibility (nested in eligibilityRules)
+                if (Boolean.TRUE.equals(value)) {
+                    return "eligibilityRules.medicareEligible = true";
+                } else if (Boolean.FALSE.equals(value)) {
+                    return "(eligibilityRules.medicareEligible = false OR eligibilityRules.medicareEligible IS NULL)";
+                }
+                return null;
+            }
+            case "medicaidEligible" -> {
+                // For PAP: filter by Medicaid eligibility (nested in eligibilityRules)
+                if (Boolean.TRUE.equals(value)) {
+                    return "eligibilityRules.medicaidEligible = true";
+                } else if (Boolean.FALSE.equals(value)) {
+                    return "(eligibilityRules.medicaidEligible = false OR eligibilityRules.medicaidEligible IS NULL)";
                 }
                 return null;
             }
@@ -365,7 +399,7 @@ public final class QueryBuilder {
      * Only allows known table names.
      */
     private static void validateTableName(String table) {
-        Set<String> validTables = Set.of("mrd_tests", "ecd_tests", "trm_tests", "tds_tests");
+        Set<String> validTables = Set.of("mrd_tests", "ecd_tests", "hct_tests", "tds_tests", "pap_programs");
         if (!validTables.contains(table)) {
             throw new IllegalArgumentException("Invalid table name: " + table);
         }
