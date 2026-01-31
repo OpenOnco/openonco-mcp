@@ -95,7 +95,12 @@ public class OpenOncoMCPServer {
 
             Returns JSON array of matching tests. Empty array [] if no matches.
             Default: 50 results, max: 500. Use 'fields' to limit response size.
-            """)
+            """,
+            annotations = @Tool.Annotations(
+                    readOnlyHint = true,
+                    destructiveHint = false,
+                    idempotentHint = true,
+                    openWorldHint = false))
     public String openonco_search_mrd(
             @ToolArg(description = "Filter by vendor/company name (partial match, case-insensitive). " +
                     "Examples: 'Natera', 'Guardant', 'Foundation'",
@@ -164,7 +169,12 @@ public class OpenOncoMCPServer {
 
             Returns JSON array of matching tests. Empty array [] if no matches.
             Default: 50 results, max: 500. Use 'fields' to limit response size.
-            """)
+            """,
+            annotations = @Tool.Annotations(
+                    readOnlyHint = true,
+                    destructiveHint = false,
+                    idempotentHint = true,
+                    openWorldHint = false))
     public String openonco_search_ecd(
             @ToolArg(description = "Filter by vendor/company name (partial match, case-insensitive). " +
                     "Examples: 'GRAIL', 'Exact Sciences', 'Freenome'",
@@ -234,7 +244,12 @@ public class OpenOncoMCPServer {
 
             Returns JSON array of matching tests. Empty array [] if no matches.
             Default: 50 results, max: 500. Use 'fields' to limit response size.
-            """)
+            """,
+            annotations = @Tool.Annotations(
+                    readOnlyHint = true,
+                    destructiveHint = false,
+                    idempotentHint = true,
+                    openWorldHint = false))
     public String openonco_search_hct(
             @ToolArg(description = "Filter by vendor/company name (partial match, case-insensitive). " +
                     "Examples: 'Myriad', 'Invitae', 'Ambry'",
@@ -287,7 +302,12 @@ public class OpenOncoMCPServer {
 
             Returns JSON array of matching tests. Empty array [] if no matches.
             Default: 50 results, max: 500. Use 'fields' to limit response size.
-            """)
+            """,
+            annotations = @Tool.Annotations(
+                    readOnlyHint = true,
+                    destructiveHint = false,
+                    idempotentHint = true,
+                    openWorldHint = false))
     public String openonco_search_tds(
             @ToolArg(description = "Filter by vendor/company name (partial match, case-insensitive). " +
                     "Examples: 'Foundation', 'Tempus', 'Caris'",
@@ -364,7 +384,12 @@ public class OpenOncoMCPServer {
 
             Returns JSON array of matching programs. Empty array [] if no matches.
             Default: 20 results. Use 'fields' to limit response size.
-            """)
+            """,
+            annotations = @Tool.Annotations(
+                    readOnlyHint = true,
+                    destructiveHint = false,
+                    idempotentHint = true,
+                    openWorldHint = false))
     public String openonco_search_pap(
             @ToolArg(description = "Filter by vendor name (partial match, case-insensitive). " +
                     "Examples: 'Natera', 'Guardant', 'Foundation'",
@@ -404,7 +429,12 @@ public class OpenOncoMCPServer {
 
             Provide either 'id' (e.g., 'pap-1') or 'name' (vendor name like 'Natera').
             Returns JSON object with all fields, or error with NOT_FOUND if program doesn't exist.
-            """)
+            """,
+            annotations = @Tool.Annotations(
+                    readOnlyHint = true,
+                    destructiveHint = false,
+                    idempotentHint = true,
+                    openWorldHint = false))
     public String openonco_get_pap(
             @ToolArg(description = "Program ID (e.g., 'pap-1'). Takes precedence if both id and name provided.",
                     required = false)
@@ -431,7 +461,12 @@ public class OpenOncoMCPServer {
 
             Provide either 'id' (e.g., 'mrd-1') or 'name' (e.g., 'Signatera').
             Returns JSON object with all fields, or error with NOT_FOUND if test doesn't exist.
-            """)
+            """,
+            annotations = @Tool.Annotations(
+                    readOnlyHint = true,
+                    destructiveHint = false,
+                    idempotentHint = true,
+                    openWorldHint = false))
     public String openonco_get_mrd(
             @ToolArg(description = "Test ID (e.g., 'mrd-1'). Takes precedence if both id and name provided.",
                     required = false)
@@ -454,7 +489,12 @@ public class OpenOncoMCPServer {
 
             Provide either 'id' (e.g., 'ecd-1') or 'name' (e.g., 'Galleri').
             Returns JSON object with all fields, or error with NOT_FOUND if test doesn't exist.
-            """)
+            """,
+            annotations = @Tool.Annotations(
+                    readOnlyHint = true,
+                    destructiveHint = false,
+                    idempotentHint = true,
+                    openWorldHint = false))
     public String openonco_get_ecd(
             @ToolArg(description = "Test ID (e.g., 'ecd-1'). Takes precedence if both id and name provided.",
                     required = false)
@@ -477,7 +517,12 @@ public class OpenOncoMCPServer {
 
             Provide either 'id' (e.g., 'hct-1') or 'name' (e.g., 'myRisk').
             Returns JSON object with all fields, or error with NOT_FOUND if test doesn't exist.
-            """)
+            """,
+            annotations = @Tool.Annotations(
+                    readOnlyHint = true,
+                    destructiveHint = false,
+                    idempotentHint = true,
+                    openWorldHint = false))
     public String openonco_get_hct(
             @ToolArg(description = "Test ID (e.g., 'hct-1'). Takes precedence if both id and name provided.",
                     required = false)
@@ -500,7 +545,12 @@ public class OpenOncoMCPServer {
 
             Provide either 'id' (e.g., 'tds-1') or 'name' (e.g., 'FoundationOne CDx').
             Returns JSON object with all fields, or error with NOT_FOUND if test doesn't exist.
-            """)
+            """,
+            annotations = @Tool.Annotations(
+                    readOnlyHint = true,
+                    destructiveHint = false,
+                    idempotentHint = true,
+                    openWorldHint = false))
     public String openonco_get_tds(
             @ToolArg(description = "Test ID (e.g., 'tds-1'). Takes precedence if both id and name provided.",
                     required = false)
@@ -530,7 +580,12 @@ public class OpenOncoMCPServer {
 
             Default metrics: name, vendor, sensitivity, specificity, lod, initialTat,
             followUpTat, fdaStatus, reimbursement. Returns JSON array of test objects.
-            """)
+            """,
+            annotations = @Tool.Annotations(
+                    readOnlyHint = true,
+                    destructiveHint = false,
+                    idempotentHint = true,
+                    openWorldHint = false))
     public String openonco_compare_mrd(
             @ToolArg(description = "Comma-separated test IDs to compare (e.g., 'mrd-1,mrd-2,mrd-3'). " +
                     "Takes precedence if both ids and names provided.",
@@ -563,7 +618,12 @@ public class OpenOncoMCPServer {
 
             Default metrics: name, vendor, testScope, sensitivity, specificity,
             stageISensitivity, ppv, npv, listPrice, fdaStatus. Returns JSON array.
-            """)
+            """,
+            annotations = @Tool.Annotations(
+                    readOnlyHint = true,
+                    destructiveHint = false,
+                    idempotentHint = true,
+                    openWorldHint = false))
     public String openonco_compare_ecd(
             @ToolArg(description = "Comma-separated test IDs to compare (e.g., 'ecd-1,ecd-2,ecd-3'). " +
                     "Takes precedence if both ids and names provided.",
@@ -596,7 +656,12 @@ public class OpenOncoMCPServer {
 
             Default metrics: name, vendor, genesAnalyzed, cancerTypes, sampleType,
             tat, listPrice, fdaStatus. Returns JSON array of test objects.
-            """)
+            """,
+            annotations = @Tool.Annotations(
+                    readOnlyHint = true,
+                    destructiveHint = false,
+                    idempotentHint = true,
+                    openWorldHint = false))
     public String openonco_compare_hct(
             @ToolArg(description = "Comma-separated test IDs to compare (e.g., 'hct-1,hct-2,hct-3'). " +
                     "Takes precedence if both ids and names provided.",
@@ -629,7 +694,12 @@ public class OpenOncoMCPServer {
 
             Default metrics: name, vendor, productType, genesAnalyzed,
             fdaCompanionDxCount, tat, listPrice, fdaStatus. Returns JSON array.
-            """)
+            """,
+            annotations = @Tool.Annotations(
+                    readOnlyHint = true,
+                    destructiveHint = false,
+                    idempotentHint = true,
+                    openWorldHint = false))
     public String openonco_compare_tds(
             @ToolArg(description = "Comma-separated test IDs to compare (e.g., 'tds-1,tds-2,tds-3'). " +
                     "Takes precedence if both ids and names provided.",
@@ -664,7 +734,12 @@ public class OpenOncoMCPServer {
             With group_by: returns {"total": N, "by_{field}": {"value1": count, ...}}
 
             Use openonco_list_vendors first to see available vendors for filtering.
-            """)
+            """,
+            annotations = @Tool.Annotations(
+                    readOnlyHint = true,
+                    destructiveHint = false,
+                    idempotentHint = true,
+                    openWorldHint = false))
     public String openonco_count_mrd(
             @ToolArg(description = "Field to group counts by. " +
                     "Valid options: vendor, approach, fdaStatus, requiresTumorTissue, reimbursement. " +
@@ -694,7 +769,12 @@ public class OpenOncoMCPServer {
             With group_by: returns {"total": N, "by_{field}": {"value1": count, ...}}
 
             Tip: group_by='testScope' shows Single-cancer vs Multi-cancer breakdown.
-            """)
+            """,
+            annotations = @Tool.Annotations(
+                    readOnlyHint = true,
+                    destructiveHint = false,
+                    idempotentHint = true,
+                    openWorldHint = false))
     public String openonco_count_ecd(
             @ToolArg(description = "Field to group counts by. " +
                     "Valid options: vendor, testScope, fdaStatus, reimbursement. " +
@@ -724,7 +804,12 @@ public class OpenOncoMCPServer {
             With group_by: returns {"total": N, "by_{field}": {"value1": count, ...}}
 
             Tip: group_by='vendor' shows distribution across testing companies.
-            """)
+            """,
+            annotations = @Tool.Annotations(
+                    readOnlyHint = true,
+                    destructiveHint = false,
+                    idempotentHint = true,
+                    openWorldHint = false))
     public String openonco_count_hct(
             @ToolArg(description = "Field to group counts by. " +
                     "Valid options: vendor, fdaStatus, reimbursement, sampleCategory. " +
@@ -754,7 +839,12 @@ public class OpenOncoMCPServer {
             With group_by: returns {"total": N, "by_{field}": {"value1": count, ...}}
 
             Tip: group_by='productType' shows Central Lab Service vs Laboratory IVD Kit.
-            """)
+            """,
+            annotations = @Tool.Annotations(
+                    readOnlyHint = true,
+                    destructiveHint = false,
+                    idempotentHint = true,
+                    openWorldHint = false))
     public String openonco_count_tds(
             @ToolArg(description = "Field to group counts by. " +
                     "Valid options: vendor, productType, fdaStatus, approach, reimbursement. " +
@@ -787,7 +877,12 @@ public class OpenOncoMCPServer {
 
             Returns JSON array of vendor names sorted alphabetically.
             Filter by category to see vendors in specific test types only.
-            """)
+            """,
+            annotations = @Tool.Annotations(
+                    readOnlyHint = true,
+                    destructiveHint = false,
+                    idempotentHint = true,
+                    openWorldHint = false))
     public String openonco_list_vendors(
             @ToolArg(description = "Filter by test category. " +
                     "Values: 'mrd', 'ecd', 'hct', 'tds'. " +
@@ -806,7 +901,12 @@ public class OpenOncoMCPServer {
 
             Returns JSON array of cancer type names sorted alphabetically.
             Filter by category to see cancer types in specific test types only.
-            """)
+            """,
+            annotations = @Tool.Annotations(
+                    readOnlyHint = true,
+                    destructiveHint = false,
+                    idempotentHint = true,
+                    openWorldHint = false))
     public String openonco_list_cancer_types(
             @ToolArg(description = "Filter by test category. " +
                     "Values: 'mrd', 'ecd', 'hct', 'tds'. " +
@@ -827,7 +927,12 @@ public class OpenOncoMCPServer {
             The testCount reflects the actual number of tests currently in each category.
 
             This is a good starting point for users new to the OpenOnco data.
-            """)
+            """,
+            annotations = @Tool.Annotations(
+                    readOnlyHint = true,
+                    destructiveHint = false,
+                    idempotentHint = true,
+                    openWorldHint = false))
     public String openonco_list_categories() {
         return safeExecute("openonco_list_categories", () -> client.listCategories());
     }
